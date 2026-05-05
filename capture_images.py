@@ -1,6 +1,5 @@
 import os
-import mss
-from PIL import Image
+from PIL import Image, ImageGrab
 
 # ----- CROP CONFIGS: (left, top, right, bottom) -----
 
@@ -26,16 +25,12 @@ TOWER_HP_ENEMY_RIGHT_CROP = (720, 377, 785, 407)
 # ----------
 
 
-def capture_screenshot() -> Image.Image:
-    """Capture screenshot return as a PIL Image"""
-    with mss.mss() as sser:
-        monitor = sser.monitors[1]  # primary monitor only (I sometimes use multiple)
-        raw = sser.grab(monitor)
-
-        return Image.frombytes("RGB", raw.size, raw.bgra, "raw", "BGRX") # discard alpha for just RGB (should be safe for ss)
+def take_screenshot():
+    """Take screenshot, return as a PIL Image"""
+    return ImageGrab.grab()
 
 
-def process_screenshot(ss) -> dict[str, Image.Image]:
+def process_screenshot(ss):
     """Process full screenshot into 12 crops needed for perception pipeline"""
     # If path, process from screenshots/ (only for my testing purposes)
     if isinstance(ss, str):
@@ -65,7 +60,7 @@ def process_screenshot(ss) -> dict[str, Image.Image]:
 
 
 if __name__ == "__main__":
-    screenshot_path = "screenshots/arena_init_empty.jpg"
+    screenshot_path = "screenshots/arena_king2_troops.jpg"
     print(f"Processing ss from path: {screenshot_path}")
 
     crops = process_screenshot(screenshot_path)
