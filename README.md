@@ -62,13 +62,19 @@ Actions: discrete action space of 33 actions (whether to play card, which card t
 ### Agent Policy
 
 Reinforcement Learning + Human Behavior Bootstrapping:
-- Use double DQN with Prioritized Experience Replay (PER) buffer, pre-fill buffer with human data
+- Use double DQN (CNN) with Prioritized Experience Replay (PER) buffer, pre-fill buffer with human data
 - Python script that records data while human plays on emulator: record environment state every second, record actions taken (attach actions to nearest state for dataset)
 - Human plays N matches against arena 1 training camp bot (try to play predictably, use similar counters and build up pushes in similar ways)
 - Undersample "wait" frames if excessively overrepresented in data
 - Positive rewards: deal tower damage, take opponent tower, win game
 - Negative rewards: take tower damage, lose tower, lose game, "leak" elixir, invalid action (not enough elixir to place card)
 - Auto-play training games to RL train
+
+CNN Architecture:
+- Use CNN as the deep Q estimation network
+- Convolutional layers input: troop locations state tensor (16x32x18 -> 16 binary 32x18 arrays that represent if/where that class/troop is present in terms of arena tiles)
+- Dense layers input: flatten+concatenation of feature vector from convolutional layers + cards in hand (4 one-hot vectors, each size 8) + normalized tower HP values (6 total) + normalized elixir value
+- CNN output: Q estimation for each action (size 33), max determines which action to take
 
 ## Codebase
 
