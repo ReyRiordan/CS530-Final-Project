@@ -88,7 +88,8 @@ capture_images.py -> take screenshot and crop/segment into 12 relevant regions
 synthetic_generation.py -> generate N synthetic data examples
 visualize_labels.py -> visualize bounding boxes + labels for synthetically generated examples
 train_yolo.py -> code to fine-tune YOLO26 with synthetic data
-record_data.py -> unfinished, supposed to record state + actions while human is playing on emulator
+record_data.py -> UNFINISHED, supposed to record state + actions while human is playing on emulator
+perception.py -> take cropped image input from capture_images.py, process with YOLO/SSIM/OCR to exact numerical state representations that CNN uses as input
 
 ### Files
 
