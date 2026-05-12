@@ -8,6 +8,7 @@ PHONE_REGION = (970, 0, 1970, 1912)
 
 # Now crop within phone region
 # ARENA_CROP = (0, 140, 1000, 1570)
+SCREEN_CROP = (0, 1100, 1000, 1912) # to detect what screen we on (for auto replaying etc)
 ARENA_CROP = (80, 285, 920, 1500)
 CARD_1_CROP = (225, 1612, 395, 1827)
 CARD_2_CROP = (412, 1612, 582, 1827)
@@ -39,6 +40,7 @@ def process_screenshot(ss):
     phone = ss.crop(PHONE_REGION)
 
     crops = {
+        "screen": phone.crop(SCREEN_CROP),
         "arena": phone.crop(ARENA_CROP),
         "card_1": phone.crop(CARD_1_CROP),
         "card_2": phone.crop(CARD_2_CROP),
@@ -60,7 +62,7 @@ def process_screenshot(ss):
 
 
 if __name__ == "__main__":
-    screenshot_path = "screenshots/arena_king2_troops.jpg"
+    screenshot_path = "screenshots/test1.jpg"
     print(f"Processing ss from path: {screenshot_path}")
 
     crops = process_screenshot(screenshot_path)
