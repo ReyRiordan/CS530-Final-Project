@@ -1,4 +1,4 @@
-path: /Users/reyriordan/Documents/CS530-Final-Project/synthetic_dataset
+path: /Users/reyriordan/Documents/CS530-Final-Project/data/synthetic_dataset
 train: train/images
 val: val/images
 

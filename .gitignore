@@ -5,5 +5,7 @@ __pycache__/
 
 .env
 
-synthetic_dataset/
+data/synthetic_dataset/*
+!data/synthetic_dataset/data.yaml
 synthetic_dataset.zip
+outputs/crops/
