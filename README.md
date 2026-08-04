@@ -1,4 +1,4 @@
-# CS530-Final-Project
+# Clash Royale Agent (CS530 Final Project)
 
 ## Codebase
 
