@@ -7,7 +7,8 @@ from PIL import Image
 from skimage.metrics import structural_similarity as ssim
 import easyocr
 
-from capture_images import process_screenshot
+from src.paths import MODELS_DIR, OUTPUTS_DIR
+from src.vision.capture_images import process_screenshot
 
 
 # ----- CONFIG -----
@@ -20,8 +21,8 @@ ARENA_TILE_BOUNDS = (0, 0, 840, 1215)
 
 SSIM_THRESHOLD = 0.9
 
-TEMPLATES_DIR = Path("templates")
-YOLO_PATH = "YOLO26n_best.pt"
+TEMPLATES_DIR = Path(__file__).resolve().parent / "templates"
+YOLO_PATH = str(MODELS_DIR / "YOLO26n_best.pt")
 
 # Order matters for flat_vector
 TOWER_KEYS = [
@@ -264,7 +265,7 @@ def perceive(crops, yolo_path=YOLO_PATH):
 # ----- TESTING -----
 
 if __name__ == "__main__":
-    path = "screenshots/remaining_dead_towers.jpg"
+    path = str(OUTPUTS_DIR / "screenshots" / "remaining_dead_towers.jpg")
     print(f"Perceiving: {path}")
 
     crops = process_screenshot(path)

@@ -7,17 +7,18 @@ import warnings
 import numpy as np
 from pynput import keyboard, mouse
 
-from capture_images import take_screenshot, process_screenshot
-from perception import perceive
-from execute_action import PLACEMENT_TILES, tile_to_screen, ARENA_TOP_LEFT, ARENA_PIXEL_W, ARENA_PIXEL_H, DISPLAY_SCALE
+from src.paths import DATA_DIR
+from src.vision.capture_images import take_screenshot, process_screenshot
+from src.vision.perception import perceive
+from src.agent.execute_action import PLACEMENT_TILES, tile_to_screen, ARENA_TOP_LEFT, ARENA_PIXEL_W, ARENA_PIXEL_H, DISPLAY_SCALE
 
 warnings.filterwarnings("ignore", message=".*pin_memory.*", category=UserWarning) # get rid of annoying warning
 
 
 # ----- CONFIG -----
 
-STATES_DIR = "human_data/states"
-ACTIONS_DIR = "human_data/actions"
+STATES_DIR = str(DATA_DIR / "human_data" / "states")
+ACTIONS_DIR = str(DATA_DIR / "human_data" / "actions")
 WAIT_ACTION = 32
 RECORD_INTERVAL = 1.0
 

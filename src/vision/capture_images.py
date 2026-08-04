@@ -1,6 +1,8 @@
 import os
 from PIL import Image, ImageGrab
 
+from src.paths import OUTPUTS_DIR
+
 # ----- CROP CONFIGS: (left, top, right, bottom) -----
 
 # Crop phone region only first (separate config in case this sht moves)
@@ -62,13 +64,14 @@ def process_screenshot(ss):
 
 
 if __name__ == "__main__":
-    screenshot_path = "screenshots/test1.jpg"
+    screenshot_path = str(OUTPUTS_DIR / "screenshots" / "test1.jpg")
     print(f"Processing ss from path: {screenshot_path}")
 
     crops = process_screenshot(screenshot_path)
 
-    os.makedirs("crops", exist_ok=True)
+    crops_dir = OUTPUTS_DIR / "crops"
+    os.makedirs(crops_dir, exist_ok=True)
     for name, crop in crops.items():
-        out_path = os.path.join("crops", f"{name}.jpg")
+        out_path = os.path.join(crops_dir, f"{name}.jpg")
         crop.save(out_path)
     print(f"Saved crops yippee")

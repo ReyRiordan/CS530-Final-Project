@@ -3,11 +3,13 @@ from PIL import Image, ImageDraw, ImageFont
 import cv2
 import numpy as np
 
+from src.paths import DATA_DIR
+
 
 # ----- Config -----
 
 
-DATASET_DIR = "synthetic_dataset"
+DATASET_DIR = str(DATA_DIR / "synthetic_dataset")
 
 TROOP_NAMES = ["archer", "giant", "goblin", "knight", "mekka", "minion", "musketeer", "spoblin"]
 SIDES = ["ally", "enemy"]

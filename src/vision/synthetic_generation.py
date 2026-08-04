@@ -1,7 +1,10 @@
 import os
 import random
+from pathlib import Path
 import numpy as np
 from PIL import Image
+
+from src.paths import DATA_DIR
 
 
 # ----- CONFIG -----
@@ -74,9 +77,9 @@ PLACEMENT_MASK = np.array([
 ], dtype=bool)
 
 # Paths
-SPRITES_DIR = "sprites"
-ARENA_TEMPLATE = os.path.join("templates", "arena_default.jpg")
-OUTPUT_DIR = "synthetic_dataset"
+SPRITES_DIR = str(DATA_DIR / "sprites")
+ARENA_TEMPLATE = str(Path(__file__).resolve().parent / "templates" / "arena_default.jpg")
+OUTPUT_DIR = str(DATA_DIR / "synthetic_dataset")
 
 # Useful later
 NUM_CLASSES = 16

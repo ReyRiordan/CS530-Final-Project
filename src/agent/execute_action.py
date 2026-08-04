@@ -1,6 +1,8 @@
 import pyautogui
 from PIL import Image, ImageDraw, ImageFont
 
+from src.paths import OUTPUTS_DIR
+
 
 # ----- CONFIG -----
 
@@ -57,7 +59,7 @@ def execute_action(action: int):
 
 
 if __name__ == "__main__":
-    image = Image.open("screenshots/arena_init_empty.jpg").copy()
+    image = Image.open(OUTPUTS_DIR / "screenshots" / "arena_init_empty.jpg").copy()
     draw = ImageDraw.Draw(image)
 
     origin_x, origin_y = ARENA_TOP_LEFT
@@ -80,5 +82,6 @@ if __name__ == "__main__":
     # Crop to arena view only
     arena_crop = image.crop((origin_x, origin_y, origin_x+ARENA_PIXEL_W, origin_y+ARENA_PIXEL_H))
 
-    arena_crop.save("screenshots/arena_grid_overlay.jpg", quality=90)
-    print(f"Saved to screenshots/arena_grid_overlay.jpg")
+    out_path = OUTPUTS_DIR / "screenshots" / "arena_grid_overlay.jpg"
+    arena_crop.save(out_path, quality=90)
+    print(f"Saved to {out_path}")

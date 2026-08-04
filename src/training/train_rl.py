@@ -8,9 +8,10 @@ import torch.optim as optim
 import argparse
 import warnings
 
-from replay_buffer import ReplayBuffer
-from environment import ClashRoyaleEnv, ALLY_HP, ENEMY_HP, compute_reward, action_penalty
-from policy_network import PolicyNetwork, select_action
+from src.paths import DATA_DIR, MODELS_DIR
+from src.training.replay_buffer import ReplayBuffer
+from src.training.environment import ClashRoyaleEnv, ALLY_HP, ENEMY_HP, compute_reward, action_penalty
+from src.agent.policy_network import PolicyNetwork, select_action
 
 warnings.filterwarnings("ignore", message=".*pin_memory.*", category=UserWarning) # get rid of annoying warning
 
@@ -33,10 +34,10 @@ EPSILON_START = 1.0
 EPSILON_MIN = 0.05
 EPSILON_DECAY = 0.98
 
-HUMAN_STATES_DIR = "human_data/states"
-HUMAN_ACTIONS_DIR = "human_data/actions"
+HUMAN_STATES_DIR = str(DATA_DIR / "human_data" / "states")
+HUMAN_ACTIONS_DIR = str(DATA_DIR / "human_data" / "actions")
 
-CHECKPOINT_DIR = "checkpoints"
+CHECKPOINT_DIR = str(MODELS_DIR / "checkpoints")
 CHECKPOINT_FREQ = 10 # episodes
 
 

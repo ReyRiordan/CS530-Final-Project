@@ -2,10 +2,11 @@ import time
 import torch
 import warnings
 
-from capture_images import take_screenshot, process_screenshot
-from perception import perceive
-from execute_action import execute_action
-from policy_network import load_policy
+from src.paths import MODELS_DIR
+from src.vision.capture_images import take_screenshot, process_screenshot
+from src.vision.perception import perceive
+from src.agent.execute_action import execute_action
+from src.agent.policy_network import load_policy
 
 warnings.filterwarnings("ignore", message=".*pin_memory.*", category=UserWarning) # get rid of annoying warning
 
@@ -25,7 +26,7 @@ def action_label(action):
 
 
 if __name__ == "__main__":
-    policy_path = "policy_270.pt"
+    policy_path = str(MODELS_DIR / "policy_270.pt")
     model = load_policy(policy_path, device=DEVICE)
     print(f"Loaded policy from {policy_path}, starting in 5 seconds...")
     time.sleep(5)

@@ -2,9 +2,9 @@ import time
 import numpy as np
 import pyautogui
 
-from capture_images import take_screenshot, process_screenshot
-from perception import perceive
-from execute_action import execute_action
+from src.vision.capture_images import take_screenshot, process_screenshot
+from src.vision.perception import perceive
+from src.agent.execute_action import execute_action
 
 STEP_INTERVAL = 1.0
 
