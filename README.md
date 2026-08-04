@@ -1,6 +1,6 @@
 # Clash Royale Agent (CS530 Final Project)
 
-An AI agent that autonomously plays the real Clash Royale mobile game at beginner (Arena 1) level. Since the game is proprietary and can't be run programmatically, the agent plays like a human: it perceives by taking screenshots of the game (running in the MuMuPlayer Android emulator on a MacBook Air M2) and acts by clicking with PyAutoGUI. Built by Rey Riordan and JohnPaul Nguyen - full details in the [final report](Principles%20of%20AI%20-%20Final%20Report.pdf).
+An AI agent that autonomously plays the real Clash Royale mobile game at beginner (Arena 1) level. Since the game is proprietary and can't be run programmatically, the agent plays like a human: it perceives by taking screenshots of the game (running in the MuMuPlayer Android emulator on a MacBook Air M2) and acts by clicking with PyAutoGUI. Built by Rey Riordan and JohnPaul Nguyen, see full details in the [final report](Principles%20of%20AI%20-%20Final%20Report.pdf).
 
 ### Demo
 
@@ -12,12 +12,13 @@ Video of the 7 straight wins with delirious commentary:
 
 ### How it works
 
-The agent runs a perceive → decide → act loop about once per second:
+The agent runs a perception -> decision -> action loop about once per second.
 
+- **Harness:** The game runs in the MuMuPlayer Android emulator, and the agent interacts with it exactly like a human would: each step it grabs a screenshot of the emulator window (PIL ImageGrab), and executes its chosen action as a mouse click at the corresponding screen coordinates (PyAutoGUI). The same harness also handles the menus, automatically navigating to start the next match so training and evaluation can run hands-off.
 - **Perception:** Each screenshot is cropped into 13 regions and processed by the ensemble perception system. A fine-tuned YOLO26 detects troops in the arena (16 classes: 8 ally + 8 enemy), SSIM template matching identifies the current screen, the 4 cards in hand, and the elixir count (0-10), and tower HP is read via custom thresholding + EasyOCR.
 - **State:** A (16, 32, 18) binary troop occupancy tensor over the arena's tile grid, plus a 39-dim flat vector (one-hot cards in hand, 6 normalized tower HPs, normalized elixir).
 - **Policy:** A small CNN (~376k params) that processes the troop tensor, concatenates the result with the flat vector, and outputs Q-values over 33 discrete actions (4 card slots × 8 key placement tiles + wait).
-- **Training:** The troop detector fine-tuned YOLO26 on 3,000 synthetically generated examples (random troop sprites pasted onto an empty arena with auto-derived labels), reaching 97.9% validation accuracy (mAP50 0.98). The policy was trained via double DQN: the replay buffer was pre-filled with ~2,600 steps of recorded human play (excess "wait" actions undersampled), then the agent trained hands-off for ~290 episodes (15+ hours of real gameplay, with automatic menu navigation between matches), rewarded for tower HP swings and penalized for wasting or leaking elixir.
+- **Training:** The troop detector fine-tuned YOLO26 on 3,000 synthetically generated examples (random troop sprites pasted onto an empty arena with auto-derived labels), reaching 97.9% validation accuracy (mAP50 0.98). The policy was trained via double DQN: the replay buffer was pre-filled with ~2,600 steps of recorded human play (excess "wait" actions undersampled), then the agent trained hands-off for ~290 episodes (15+ hours of real gameplay), rewarded for tower HP swings and penalized for wasting or leaking elixir.
 
 ### Results
 
@@ -26,8 +27,6 @@ The trained agent won 7 matches in a row (2 against the built-in Trainer George 
 ## Codebase
 
 Run scripts as modules from the repo root, e.g. `python -m src.training.train_rl` or `python -m src.agent.play_policy`.
-
-### Code
 
 `src/vision/` -> perception + synthetic data pipeline:
 
