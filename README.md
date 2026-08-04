@@ -6,7 +6,9 @@ An AI agent that autonomously plays the real Clash Royale mobile game at beginne
 
 Video of the 7 straight wins with delirious commentary:
 
-<a href="https://youtu.be/S25lfXmx7i4"><img src="https://img.youtube.com/vi/S25lfXmx7i4/maxresdefault.jpg" alt="Gameplay Demo (with delirious commentary)" width="480"></a>
+<p align="center">
+  <a href="https://youtu.be/S25lfXmx7i4"><img src="https://img.youtube.com/vi/S25lfXmx7i4/maxresdefault.jpg" alt="Gameplay Demo (with delirious commentary)" width="480"></a>
+</p>
 
 ### How it works
 
