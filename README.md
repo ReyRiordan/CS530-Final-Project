@@ -2,51 +2,67 @@
 
 ## Codebase
 
+Run scripts as modules from the repo root, e.g. `python -m src.training.train_rl` or `python -m src.agent.play_policy`.
+
 ### Code
 
-[synthetic_generation.py](synthetic_generation.py) -> generate N synthetic data examples
+`src/vision/` -> perception + synthetic data pipeline:
 
-[visualize_labels.py](visualize_labels.py) -> visualize bounding boxes + labels for synthetically generated examples
+[synthetic_generation.py](src/vision/synthetic_generation.py) -> generate N synthetic data examples
 
-[train_yolo.ipynb](train_yolo.ipynb) -> code to fine-tune YOLO26 with synthetic data (on Google Colab free GPU)
+[train_yolo.ipynb](src/vision/train_yolo.ipynb) -> code to fine-tune YOLO26 with synthetic data (on Google Colab free GPU)
 
-[validate_yolo.py](validate_yolo.py) -> quick yoink of built-in YOLO validation
+[validate_yolo.py](src/vision/validate_yolo.py) -> quick yoink of built-in YOLO validation
 
-[capture_images.py](capture_images.py) -> take screenshot and crop/segment into 13 relevant regions
+[capture_images.py](src/vision/capture_images.py) -> take screenshot and crop/segment into 13 relevant regions
 
-[perception.py](perception.py) -> take cropped image input from capture_images.py, process with YOLO/SSIM/OCR to exact numerical state representations that policy network uses as input
+[perception.py](src/vision/perception.py) -> take cropped image input from capture_images.py, process with YOLO/SSIM/OCR to exact numerical state representations that policy network uses as input
 
-[policy_network.py](policy_network.py) -> CNN/DQN that takes in game state and Q estimates for 33 actions
+`src/agent/` -> the deployed agent (perceive -> decide -> act):
 
-[execute_action.py](execute_action.py) -> executes an action using PyAutoGUI
+[policy_network.py](src/agent/policy_network.py) -> CNN/DQN that takes in game state and Q estimates for 33 actions
 
-[environment.py](environment.py) -> Gym environment wrapper for RL training, automatic menu navigation to start new match
+[execute_action.py](src/agent/execute_action.py) -> executes an action using PyAutoGUI
 
-[replay_buffer.py](replay_buffer.py) -> replay buffer for RL training
+[play_policy.py](src/agent/play_policy.py) -> play matches with agent policy and allat
 
-[train_rl.py](train_rl.py) -> RL training, load recorded human data with undersampling
+`src/training/` -> RL training:
 
-[play_policy.py](play_policy.py) -> play matches with agent policy and allat
+[environment.py](src/training/environment.py) -> Gym environment wrapper for RL training, automatic menu navigation to start new match
 
-[record_data.py](record_data.py) -> Records state + actions into human_data/ while human is playing on emulator
+[replay_buffer.py](src/training/replay_buffer.py) -> replay buffer for RL training
+
+[train_rl.py](src/training/train_rl.py) -> RL training, load recorded human data with undersampling
+
+`src/utils/` -> utilities:
+
+[record_data.py](src/utils/record_data.py) -> Records state + actions into data/human_data/ while human is playing on emulator
+
+[visualize_labels.py](src/utils/visualize_labels.py) -> visualize bounding boxes + labels for synthetically generated examples
+
+[extract_policy.py](src/utils/extract_policy.py) -> extract standalone policy weights from a training checkpoint
+
+[plot_rewards.py](src/utils/plot_rewards.py) -> plot episodic reward curve from training log
 
 ### Files
 
-[sprites/](sprites/) -> all sprites for 16 troop classes (100-200 transparent pngs each), used for synthetic data generation
+[models/](models/) -> trained weights: YOLO troop detector, best policy, and RL training [checkpoints/](models/checkpoints/)
 
-[synthetic_dataset/](synthetic_dataset/) -> couple old synthetic data examples, full dataset (3k examples) is too big for repo
+[data/sprites/](data/sprites/) -> all sprites for 16 troop classes (100-200 transparent pngs each), used for synthetic data generation
 
-[templates/](templates/) -> images of all cards + tower/arena states to use for comparison/detection base later
+[data/synthetic_dataset/](data/synthetic_dataset/) -> dataset config, full dataset (3k examples) is too big for repo
 
-[human_data/](human_data/) -> recorded human data, states/ and actions/
+[src/vision/templates/](src/vision/templates/) -> images of all cards + tower/arena states used by the perception pipeline (SSIM matching)
 
-[screenshots/](screenshots/) -> screenshots used for testing, cropping, etc
+[data/human_data/](data/human_data/) -> recorded human data, states/ and actions/
 
-[crops/](crops/) -> capture_images.py testing output
+[outputs/screenshots/](outputs/screenshots/) -> screenshots used for testing, cropping, etc
 
-[checkpoints/](checkpoints/) -> model checkpoints from RL training
+[outputs/runs/](outputs/runs/) -> auto-generated YOLO validation stats
 
-[runs/](runs/) -> auto-generated YOLO validation stats
+[outputs/recording.gif](outputs/recording.gif) -> demo recording of the agent playing
+
+[Principles of AI - Final Report.pdf](Principles%20of%20AI%20-%20Final%20Report.pdf) -> final report
 
 ## Plan
 
